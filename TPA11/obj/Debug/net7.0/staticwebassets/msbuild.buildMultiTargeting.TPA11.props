@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/TPA11.props" />
+</Project>
