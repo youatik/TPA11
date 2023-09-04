@@ -29,3 +29,14 @@
 /Users/youatik/Dropbox/transfer/TPA11/TPA11/obj/Debug/net7.0/TPA11.pdb
 /Users/youatik/Dropbox/transfer/TPA11/TPA11/obj/Debug/net7.0/TPA11.genruntimeconfig.cache
 /Users/youatik/Dropbox/transfer/TPA11/TPA11/obj/Debug/net7.0/ref/TPA11.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Humanizer.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Mono.TextTemplating.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/MySqlConnector.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/Pomelo.EntityFrameworkCore.MySql.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/bin/Debug/net7.0/System.CodeDom.dll
+/Users/youatik/Dropbox/transfer/TPA11/TPA11/obj/Debug/net7.0/TPA11.csproj.CopyComplete
