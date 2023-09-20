@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Edit Library Item by ISBN";
+}
+
+<h1>Edit by ISBN</h1>
+
+<form asp-action="FindItemToEdit" method="post">
+    <div class="form-group">
+        <label for="isbn">Enter ISBN:</label>
+        <input type="text" id="isbn" name="isbn" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Find</button>
+</form>

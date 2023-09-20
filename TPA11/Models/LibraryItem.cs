@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System;
+using System.Collections.Generic; // Don't forget to include this for ICollection
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TPA11.Models
 {
@@ -38,10 +42,9 @@ namespace TPA11.Models
 
         public int Length { get; set; }
 
-        // Navigation property for OrderItems (one-to-many)
-        public ICollection<OrderItem> OrderItems { get; set; }
+        // Make these navigation properties optional
+        public ICollection<OrderItem>? OrderItems { get; set; }
 
-        // Navigation property for ShoppingCartItems (one-to-many)
-        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public ICollection<ShoppingCartItem>? ShoppingCartItems { get; set; }
     }
 }
