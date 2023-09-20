@@ -19,5 +19,8 @@ namespace TPA11.Models
 
         [Column(TypeName = "decimal(10, 2)")]
         public decimal? TotalAmount { get; set; }
+
+        // Navigation property for OrderItems (one-to-many)
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

@@ -14,9 +14,9 @@ namespace TPA11.Models
         [ForeignKey("OrderId")]
         public ClientOrder Order { get; set; }
 
-        public long? EanIsbn13 { get; set; }
+        public long? ean_isbn13 { get; set; }
 
-        [ForeignKey("EanIsbn13")]
+        [ForeignKey("ean_isbn13")]
         public LibraryItem LibraryItem { get; set; }
 
         public int? Quantity { get; set; }
@@ -25,5 +25,7 @@ namespace TPA11.Models
         public decimal? Price { get; set; }
 
         public int? ClientId { get; set; }
+
+       
     }
 }

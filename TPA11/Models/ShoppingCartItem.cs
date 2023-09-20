@@ -14,9 +14,9 @@ namespace TPA11.Models
         [ForeignKey("ClientId")]
         public Client Client { get; set; }
 
-        public long? EanIsbn13 { get; set; }
+        public long? ean_isbn13 { get; set; }
 
-        [ForeignKey("EanIsbn13")]
+        [ForeignKey("ean_isbn13")]
         public LibraryItem LibraryItem { get; set; }
 
         public int? Quantity { get; set; }

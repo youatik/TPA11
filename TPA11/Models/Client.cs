@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace TPA11.Models
 {
     public class Client
@@ -23,5 +24,18 @@ namespace TPA11.Models
         [Required]
         [StringLength(200)]
         public string Address { get; set; }
+
+        // Navigation property for ClientOrders (one-to-many)
+        public ICollection<ClientOrder> ClientOrders { get; set; }
+
+        // Navigation property for Payments (one-to-many)
+        public ICollection<Payment> Payments { get; set; }
+
+        // Navigation property for ShoppingCartItems (one-to-many)
+        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
+
+        // Navigation property for UserAuthentication (one-to-one)
+        public UserAuthentication UserAuthentication { get; set; }
+
     }
 }
