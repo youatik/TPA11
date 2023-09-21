@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Delete by ISBN";
+}
+
+<h1>Delete Item by ISBN</h1>
+
+<form method="post" action="/LibraryItems/DeleteConfirmed">
+    <div>
+        <label for="isbn">ISBN:</label>
+        <input type="number" id="isbn" name="isbn" required />
+    </div>
+    <input type="submit" value="Find and Delete" onclick="return confirmDelete();" />
+</form>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>function confirmDelete() {
+        var isbn = document.getElementById('isbn').value;
+
+        // Make AJAX call to check if the item can be deleted
+        $.ajax({
+            url: '/LibraryItems/CanDeleteFromLibrary?eanIsbn13=' + isbn,
+            type: 'GET',
+            success: function (response) {
+                if (response) {
+                    var proceed = confirm('Are you sure you want to delete the item with ISBN: ' + isbn + '?');
+                    if (proceed) {
+                        // Submit the form
+                        $("form").submit();
+                    }
+                } else {
+                    alert("It cannot be deleted because it is referenced by an existing order");
+                }
+            }
+        });
+
+        // Prevent form submission until we know it can be deleted
+        return false;
+    }</script>

@@ -5,6 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;  // <-- Add this for logging
 using System.Threading.Tasks;
 using System.Linq;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using System.Data.Common; // for DbConnection and DbCommand
+
+
+
 
 namespace TPA11.Controllers
 {
@@ -125,5 +131,73 @@ namespace TPA11.Controllers
                 return View("IsbnEdit");
             }
         }
+
+
+        // GET: LibraryItems/DeleteByIsbn
+        public IActionResult DeleteByIsbn()
+        {
+            return View();
+        }
+
+        // POST: LibraryItems/DeleteConfirmed
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(long isbn)
+        {
+            bool canDelete = await CanDeleteFromLibrary(isbn);
+            if (!canDelete)
+            {
+                // Handle it (e.g., return a specific view that shows the error message)
+                return Json(new { message = "It cannot be deleted because it is referenced by an existing order" });
+            }
+
+            var libraryItem = await _context.LibraryItems.FindAsync(isbn);
+            if (libraryItem != null)
+            {
+                _context.LibraryItems.Remove(libraryItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(LibraryItems));
+            }
+            return NotFound();
+        }
+
+
+
+
+        public async Task<bool> CanDeleteFromLibrary(long eanIsbn13) //method ADO.net et non EF car EF ne fonctionne pas?
+        {
+            try
+            {
+
+                //await using DbConnection conn = _context.Database.GetDbConnection(); //va interrompre la connection EF
+                //await conn.OpenAsync();
+
+                var conn = _context.Database.GetDbConnection(); //on ouvre la connection et on ne la ferme jamais? EF s'en occupe
+                await conn.OpenAsync();
+
+                await using var command = conn.CreateCommand();
+                command.CommandText = "CALL CanDeleteFromLibrary(@ean_isbn13_param)";
+
+                var param = command.CreateParameter();
+                param.ParameterName = "@ean_isbn13_param";
+                param.Value = eanIsbn13;
+
+                command.Parameters.Add(param);
+
+                var result = await command.ExecuteScalarAsync();
+                return Convert.ToInt32(result) == 1;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while executing the stored procedure.");
+                return false;
+            }
+        }
+
+
+
+
+
+
+
     }
 }

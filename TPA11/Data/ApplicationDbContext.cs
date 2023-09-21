@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+// Import other required namespaces if necessary
+
 namespace TPA11.Data
 {
-	public class ApplicationDbContext:DbContext
-	{
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):
-			base(options) 
-		{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
 
-		}
+        }
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientOrder> ClientOrders { get; set; }
@@ -17,10 +19,8 @@ namespace TPA11.Data
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<UserAuthentication> UserAuthentications { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<ClientOrder>()
                 .HasOne(co => co.Client)
                 .WithMany(c => c.ClientOrders)
@@ -37,7 +37,7 @@ namespace TPA11.Data
                 .HasOne(oi => oi.LibraryItem)
                 .WithMany(li => li.OrderItems)
                 .HasForeignKey(oi => oi.ean_isbn13)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);  // Changed from Restrict to Cascade
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Client)
@@ -63,9 +63,7 @@ namespace TPA11.Data
                 .HasForeignKey<UserAuthentication>(ua => ua.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // You can configure additional constraints, indexes, etc., here if needed.
             base.OnModelCreating(modelBuilder);
         }
     }
 }
-
