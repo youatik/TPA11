@@ -133,13 +133,13 @@ namespace TPA11.Controllers
         }
 
 
-        // GET: LibraryItems/DeleteByIsbn
+        // GET: LibraryItems/DeleteByIsbn => Mène à la vue qui permet de supprimer un livre
         public IActionResult DeleteByIsbn()
         {
             return View();
         }
 
-        // POST: LibraryItems/DeleteConfirmed
+        // POST: LibraryItems/DeleteConfirmed => Methode qui affiche le message qui determine si le livre peut être effacé
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(long isbn)
         {
@@ -193,6 +193,25 @@ namespace TPA11.Controllers
             }
         }
 
+
+        // GET: LibraryItems/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: LibraryItems/Create
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("ean_isbn13,Title,Creators,FirstName,LastName,Description,Publisher,PublishDate,Price,Length")] LibraryItem libraryItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(libraryItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(LibraryItems));
+            }
+            return View(libraryItem);
+        }
 
 
 

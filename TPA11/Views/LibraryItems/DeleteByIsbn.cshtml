@@ -4,12 +4,12 @@
 
 <h1>Delete Item by ISBN</h1>
 
-<form method="post" action="/LibraryItems/DeleteConfirmed">
-    <div>
+<form method="post" action="/LibraryItems/DeleteConfirmed" class="mb-4">
+    <div class="form-group">
         <label for="isbn">ISBN:</label>
-        <input type="number" id="isbn" name="isbn" required />
+        <input type="number" id="isbn" name="isbn" class="form-control" required />
     </div>
-    <input type="submit" value="Find and Delete" onclick="return confirmDelete();" />
+    <button type="submit" class="btn btn-danger" onclick="return confirmDelete();">Find and Delete</button>
 </form>
 
 <!-- Include jQuery -->

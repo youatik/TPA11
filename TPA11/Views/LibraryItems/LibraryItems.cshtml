@@ -1,4 +1,4 @@
-﻿@model List<LibraryItem>  
+﻿@model List<LibraryItem>
 
 <h1>Library Items</h1>
 
@@ -9,7 +9,7 @@
             <th>Title</th>
             <th>Creators</th>
             <th>Description</th>
-            <!-- Add more columns as needed -->
+            <th>Image</th> <!-- New column header for the Image -->
         </tr>
     </thead>
     <tbody>
@@ -20,7 +20,8 @@
                 <td>@item.Title</td>
                 <td>@item.Creators</td>
                 <td>@item.Description</td>
-                <!-- Add more columns as needed -->
+                <td><img src="@String.Format("https://covers.openlibrary.org/b/isbn/{0}-M.jpg", item.ean_isbn13)" alt="Book cover for @item.Title" /></td>
+                <!-- The image for the ISBN is inserted here using String.Format to interpolate the ISBN -->
             </tr>
         }
     </tbody>
