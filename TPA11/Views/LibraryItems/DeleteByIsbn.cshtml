@@ -12,13 +12,13 @@
     <button type="submit" class="btn btn-danger" onclick="return confirmDelete();">Find and Delete</button>
 </form>
 
-<!-- Include jQuery -->
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>function confirmDelete() {
         var isbn = document.getElementById('isbn').value;
 
-        // Make AJAX call to check if the item can be deleted
+        // Faire une requête AJAX pour vérifier si l'élément peut être supprimé
         $.ajax({
             url: '/LibraryItems/CanDeleteFromLibrary?eanIsbn13=' + isbn,
             type: 'GET',
@@ -26,7 +26,7 @@
                 if (response) {
                     var proceed = confirm('Are you sure you want to delete the item with ISBN: ' + isbn + '?');
                     if (proceed) {
-                        // Submit the form
+                        // Soumettre le formulaire.
                         $("form").submit();
                     }
                 } else {
@@ -35,6 +35,6 @@
             }
         });
 
-        // Prevent form submission until we know it can be deleted
+        // Empêcher la soumission du formulaire tant que nous ne savons pas s'il peut être supprimé.
         return false;
     }</script>

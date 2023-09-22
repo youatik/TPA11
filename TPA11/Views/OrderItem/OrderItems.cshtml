@@ -1,0 +1,29 @@
+﻿@model List<OrderItem>
+
+<h2>Order Items for Order ID: @ViewBag.OrderId</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Library Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th> <!-- Add a new column for the action button -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.ean_isbn13</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>
+                    <a asp-controller="LibraryItems" asp-action="ViewByISBN" asp-route-isbn="@item.ean_isbn13" class="btn btn-primary">View Book</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

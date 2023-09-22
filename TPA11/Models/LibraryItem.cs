@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TPA11.Models
 {
-    [Table("library")] // Specify the table name here
+    [Table("library")] // Spécifier le nom de la table ici puisqu'il diffère du modèle
     public class LibraryItem
     {
         [Key]
@@ -42,7 +42,7 @@ namespace TPA11.Models
 
         public int Length { get; set; }
 
-        // Make these navigation properties optional
+        // Rendez ces propriétés de navigation optional? afin qu'elles puissent être NULL.
         public ICollection<OrderItem>? OrderItems { get; set; }
 
         public ICollection<ShoppingCartItem>? ShoppingCartItems { get; set; }

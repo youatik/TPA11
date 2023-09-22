@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-// Import other required namespaces if necessary
+
 
 namespace TPA11.Data
 {
@@ -37,7 +37,7 @@ namespace TPA11.Data
                 .HasOne(oi => oi.LibraryItem)
                 .WithMany(li => li.OrderItems)
                 .HasForeignKey(oi => oi.ean_isbn13)
-                .OnDelete(DeleteBehavior.Cascade);  // Changed from Restrict to Cascade
+                .OnDelete(DeleteBehavior.Cascade);  // Cascade au cas ou une reference a une cle etrangere existe
 
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Client)

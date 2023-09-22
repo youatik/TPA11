@@ -10,7 +10,7 @@ builder.Configuration.AddJsonFile("appsettings.json");
 
 
 
-// Add services to the container.
+// Ajouter des services.
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -25,7 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurer le pipeline de requêtes HTTP.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

@@ -5,6 +5,7 @@ using TPA11.Models;
 
 namespace TPA11.Models
 {
+    [Table("clientorder")] // Spécifier le nom de la table ici puisqu'il diffère du modèle(EF pluralise par default)
     public class ClientOrder
     {
         [Key]
@@ -20,7 +21,7 @@ namespace TPA11.Models
         [Column(TypeName = "decimal(10, 2)")]
         public decimal? TotalAmount { get; set; }
 
-        // Navigation property for OrderItems (one-to-many)
+        // Propriété de navigation pour OrderItems (one-to-many)
         public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

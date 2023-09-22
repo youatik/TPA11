@@ -9,7 +9,7 @@
             <th>Title</th>
             <th>Creators</th>
             <th>Description</th>
-            <th>Image</th> <!-- New column header for the Image -->
+            <th>Image</th> <!-- entête de colonne pour l'image. -->
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
                 <td>@item.Creators</td>
                 <td>@item.Description</td>
                 <td><img src="@String.Format("https://covers.openlibrary.org/b/isbn/{0}-M.jpg", item.ean_isbn13)" alt="Book cover for @item.Title" /></td>
-                <!-- The image for the ISBN is inserted here using String.Format to interpolate the ISBN -->
+                <!-- L'image pour l'ISBN est insérée ici en utilisant String.Format pour l'ISBN. -->
             </tr>
         }
     </tbody>

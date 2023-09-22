@@ -1,0 +1,39 @@
+﻿@model TPA11.Models.LibraryItem
+
+<h2>Library Item Details</h2>
+
+<table class="table">
+    <!-- Table row for the image -->
+    <tr>
+        <td colspan="2">
+            <img src="@String.Format("https://covers.openlibrary.org/b/isbn/{0}-L.jpg", Model.ean_isbn13)" alt="Book cover for @Model.Title" />
+        </td>
+    </tr>
+    <!-- Table row for ISBN -->
+    <tr>
+        <th>ISBN</th>
+        <td>@Model.ean_isbn13</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>@Model.Title</td>
+    </tr>
+    <tr>
+        <th>Creators</th>
+        <td>@Model.Creators</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Publisher</th>
+        <td>@Model.Publisher</td>
+    </tr>
+    <tr>
+        <th>Publish Date</th>
+        <td>
+            @(Model.PublishDate.HasValue ? Model.PublishDate.Value.ToString("yyyy-MM-dd") : "N/A")
+        </td>
+    </tr>
+</table>

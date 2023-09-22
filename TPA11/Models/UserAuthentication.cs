@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using TPA11.Models;
 
-//comment
 
 namespace TPA11.Models
 {

@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+
 using TPA11.Models;
-using TPA11.Data; // Include the namespace for ApplicationDbContext
-using Microsoft.EntityFrameworkCore; // Include the namespace for Entity Framework Core
+using TPA11.Data; 
+using Microsoft.EntityFrameworkCore; 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TPA11.Models;

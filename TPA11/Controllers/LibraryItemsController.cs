@@ -1,13 +1,14 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
+
 using TPA11.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;  // <-- Add this for logging
+using Microsoft.Extensions.Logging;  // <-- Ajoutez ceci pour le logging
 using System.Threading.Tasks;
 using System.Linq;
-using System.Data;
+using System;
 using Microsoft.Data.SqlClient;
-using System.Data.Common; // for DbConnection and DbCommand
+using System.Data.Common; // pour DbConnection et DbCommand
 
 
 
@@ -17,12 +18,12 @@ namespace TPA11.Controllers
     public class LibraryItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<LibraryItemsController> _logger;  // <-- Declare a logger
+        private readonly ILogger<LibraryItemsController> _logger;  // <-- Declarer un logger
 
         public LibraryItemsController(ApplicationDbContext context, ILogger<LibraryItemsController> logger)  // <-- Inject a logger
         {
             _context = context;
-            _logger = logger;  // <-- Initialize logger
+            _logger = logger;  // <-- Initialiser le logger
         }
 
         public IActionResult LibraryItems()
@@ -33,6 +34,23 @@ namespace TPA11.Controllers
 
             return View(libraryItems);
         }
+
+
+        public async Task<IActionResult> ViewByISBN(long isbn)
+        {
+            // Retrieve the LibraryItem by ISBN
+            var libraryItem = await _context.LibraryItems
+                .FirstOrDefaultAsync(li => li.ean_isbn13 == isbn);
+
+            if (libraryItem == null)
+            {
+                return NotFound(); // Return a 404 Not Found response if the item is not found
+            }
+
+            return View("Views/LibraryItems/ViewByISBN.cshtml", libraryItem);
+        }
+
+
 
         // GET: LibraryItems/Edit/5
         public async Task<IActionResult> Edit(long? id)
@@ -121,13 +139,13 @@ namespace TPA11.Controllers
                 }
                 else
                 {
-                    // Handle item not found
+                    // Gérez l'élément non trouvé.
                     return View("IsbnEdit");
                 }
             }
             else
             {
-                // Handle invalid ISBN
+                // Gérez un ISBN invalide.
                 return View("IsbnEdit");
             }
         }
@@ -146,7 +164,7 @@ namespace TPA11.Controllers
             bool canDelete = await CanDeleteFromLibrary(isbn);
             if (!canDelete)
             {
-                // Handle it (e.g., return a specific view that shows the error message)
+                // renvoyez une vue spécifique qui affiche le message d'erreur
                 return Json(new { message = "It cannot be deleted because it is referenced by an existing order" });
             }
 

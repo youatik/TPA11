@@ -4,6 +4,7 @@ using TPA11.Models;
 
 namespace TPA11.Models
 {
+    [Table("orderitem")] // Spécifier le nom de la table ici puisqu'il diffère du modèle (plurier automatique)
     public class OrderItem
     {
         [Key]

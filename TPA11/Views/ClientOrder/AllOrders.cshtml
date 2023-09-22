@@ -1,0 +1,29 @@
+﻿@model List<ClientOrder>
+
+<h2>All Client Orders</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Client</th>
+            <th>Order Date</th>
+            <th>Total Amount</th>
+            <th>Actions</th> <!-- Add a new column for the action button -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@($"{order.Client.FirstName} {order.Client.LastName}")</td>
+                <td>@(order.OrderDate.HasValue ? order.OrderDate.Value.ToString("yyyy-MM-dd") : "N/A")</td>
+                <td>@(order.TotalAmount.HasValue ? order.TotalAmount.Value.ToString("C") : "N/A")</td>
+                <td>
+                    <a asp-controller="OrderItem" asp-action="OrderItems" asp-route-orderId="@order.OrderId" class="btn btn-primary">View Items</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
