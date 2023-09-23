@@ -3,12 +3,12 @@ using System.Data;
 
 using TPA11.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;  // <-- Ajoutez ceci pour le logging
+using Microsoft.Extensions.Logging;  // <-- Ajouté pour le logging
 using System.Threading.Tasks;
 using System.Linq;
 using System;
 using Microsoft.Data.SqlClient;
-using System.Data.Common; // pour DbConnection et DbCommand
+using System.Data.Common; 
 
 
 
@@ -20,12 +20,13 @@ namespace TPA11.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ILogger<LibraryItemsController> _logger;  // <-- Declarer un logger
 
-        public LibraryItemsController(ApplicationDbContext context, ILogger<LibraryItemsController> logger)  // <-- Inject a logger
+        public LibraryItemsController(ApplicationDbContext context, ILogger<LibraryItemsController> logger)  // <-- Injecter le logger
         {
             _context = context;
             _logger = logger;  // <-- Initialiser le logger
         }
 
+        //trouve tout les livres par procédure stockée
         public IActionResult LibraryItems()
         {
             var libraryItems = _context.LibraryItems
@@ -38,13 +39,13 @@ namespace TPA11.Controllers
 
         public async Task<IActionResult> ViewByISBN(long isbn)
         {
-            // Retrieve the LibraryItem by ISBN
+            // Chercher le LibraryItem par ISBN
             var libraryItem = await _context.LibraryItems
                 .FirstOrDefaultAsync(li => li.ean_isbn13 == isbn);
 
             if (libraryItem == null)
             {
-                return NotFound(); // Return a 404 Not Found response if the item is not found
+                return NotFound(); // Retourne un 404 si non trouvé
             }
 
             return View("Views/LibraryItems/ViewByISBN.cshtml", libraryItem);
@@ -52,7 +53,7 @@ namespace TPA11.Controllers
 
 
 
-        // GET: LibraryItems/Edit/5
+        // Cherche libraryItem pour edit
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -69,11 +70,11 @@ namespace TPA11.Controllers
             return View(libraryItem);
         }
 
-        // POST: LibraryItems/Edit/5
+        // Sauvegarde le libraryItem modifié
         [HttpPost]
         public async Task<IActionResult> Edit(long id, [Bind("ean_isbn13,Title,Creators,FirstName,LastName,Description,Publisher,PublishDate,Price,Length")] LibraryItem libraryItem)
         {
-            _logger.LogInformation($"Received LibraryItem: {System.Text.Json.JsonSerializer.Serialize(libraryItem)}");  // <-- Log here
+            _logger.LogInformation($"Received LibraryItem: {System.Text.Json.JsonSerializer.Serialize(libraryItem)}");  // <-- Logger pour debug
 
             if (id != libraryItem.ean_isbn13)
             {
@@ -85,13 +86,12 @@ namespace TPA11.Controllers
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.SelectMany(x => x.Value.Errors.Select(e => e.ErrorMessage));
-                _logger.LogInformation($"Model state is invalid. Errors: {string.Join(", ", errors)}");
+                _logger.LogInformation($"Model state is invalid. Errors: {string.Join(", ", errors)}"); // <-- Logger pour debug
             }
 
             if (ModelState.IsValid)
             {
                
-
                 try
                 {
                     _context.Update(libraryItem);
@@ -119,13 +119,13 @@ namespace TPA11.Controllers
             return _context.LibraryItems.Any(e => e.ean_isbn13 == id);
         }
 
-        // GET: LibraryItems/IsbnEdit
+        // Retourne la vue pour editer par ISBN
         public IActionResult IsbnEdit()
         {
             return View();
         }
 
-        // POST: LibraryItems/FindItemToEdit
+        // POST: pour trouver l'item à editer
         [HttpPost]
         public async Task<IActionResult> FindItemToEdit(string isbn)
         {
@@ -151,20 +151,20 @@ namespace TPA11.Controllers
         }
 
 
-        // GET: LibraryItems/DeleteByIsbn => Mène à la vue qui permet de supprimer un livre
+        // Mène à la vue qui permet de supprimer un livre
         public IActionResult DeleteByIsbn()
         {
             return View();
         }
 
-        // POST: LibraryItems/DeleteConfirmed => Methode qui affiche le message qui determine si le livre peut être effacé
+        // affiche le message qui determine si le livre peut être effacé et qui va faire le delete
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(long isbn)
         {
             bool canDelete = await CanDeleteFromLibrary(isbn);
             if (!canDelete)
             {
-                // renvoyez une vue spécifique qui affiche le message d'erreur
+                // renvoye une vue spécifique qui affiche le message d'erreur
                 return Json(new { message = "It cannot be deleted because it is referenced by an existing order" });
             }
 
@@ -178,18 +178,12 @@ namespace TPA11.Controllers
             return NotFound();
         }
 
-
-
-
-        public async Task<bool> CanDeleteFromLibrary(long eanIsbn13) //method ADO.net et non EF car EF ne fonctionne pas?
+        // fonction qui fait appel a la procedure stockée pour déterminer si le livre peut être effacé
+        public async Task<bool> CanDeleteFromLibrary(long eanIsbn13) 
         {
             try
             {
-
-                //await using DbConnection conn = _context.Database.GetDbConnection(); //va interrompre la connection EF
-                //await conn.OpenAsync();
-
-                var conn = _context.Database.GetDbConnection(); //on ouvre la connection et on ne la ferme jamais? EF s'en occupe
+                var conn = _context.Database.GetDbConnection(); 
                 await conn.OpenAsync();
 
                 await using var command = conn.CreateCommand();
@@ -212,13 +206,13 @@ namespace TPA11.Controllers
         }
 
 
-        // GET: LibraryItems/Create
+        // Retourne la vue pour créer un livre
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: LibraryItems/Create
+        // Crée un livre
         [HttpPost]
         public async Task<IActionResult> Create([Bind("ean_isbn13,Title,Creators,FirstName,LastName,Description,Publisher,PublishDate,Price,Length")] LibraryItem libraryItem)
         {

@@ -18,12 +18,12 @@ namespace TPA11.Controllers
 
         public async Task<IActionResult> OrderItems(int orderId)
         {
-            // Retrieve all OrderItems for the specified order ID
+            // Checher tout les items pour un order ID
             var orderItems = await _context.OrderItems
                 .Where(oi => oi.OrderId == orderId)
                 .ToListAsync();
 
-            // Pass the orderId to the view using ViewBag
+            // Passe le orderId à la vue par le ViewBag
             ViewBag.OrderId = orderId;
 
             return View(orderItems);

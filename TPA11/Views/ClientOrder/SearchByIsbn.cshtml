@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TPA11.Models.ClientOrder>
+
+<div class="container mt-4">
+    <h2>Search by ISBN</h2>
+
+    <form method="get" asp-action="SearchByIsbn" class="my-4">
+        <div class="form-group">
+            <input type="text" name="ean_isbn13" placeholder="Enter ISBN" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <p class="alert alert-warning">No orders found for the given ISBN.</p>
+    }
+    else
+    {
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Client Name</th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>@order.Client?.FirstName @order.Client?.LastName</td>
+                        <!-- Fill in more cells as needed -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -42,7 +42,7 @@ namespace TPA11.Models
 
         public int Length { get; set; }
 
-        // Rendez ces propriétés de navigation optional? afin qu'elles puissent être NULL.
+        // Rends ces propriétés de navigation optional? afin qu'elles puissent être NULL.
         public ICollection<OrderItem>? OrderItems { get; set; }
 
         public ICollection<ShoppingCartItem>? ShoppingCartItems { get; set; }
